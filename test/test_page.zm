@@ -1,18 +1,6 @@
 
-
-// The colors used for the bullseye.
-color[..] shape_colors =
-{
-    color:red,
-    color:blue,
-    color:yellow,
-    color:black,
-    color:magenta,
-    color:aqua,
-    color:white,
-    color:green
-};
-
+const real TWOPI = 3.14159265359 * 2.0;
+const color LIGHT_COLOR = rgbi:255/255/255;
 
 enum SoundDirection {
     SND_DIRECTION_LEFT  = 1 << 0,
@@ -53,6 +41,11 @@ Page test_page
         {
             response.process_hit(event_time, EVENT_STOP_TIMER);
         }
+    }
+
+    on_event:init()
+    {
+        fill_pattern_color = color:black;
     }
 
     // Key press doesn't work properly since the baby window is a output
@@ -147,25 +140,27 @@ Page test_page
     {
         on_event:init()
         {
-            spacing     = 50;
-            height      = 0;
+            spacing     = 0;
+            size = 1920,1080;
         }
 
         CanvasGadget canvas
         {
-            real max_radius;
+            real cir_radius;
+            real outer_radius;
 
             on_event:init()
             {
-                size = 600,600;
+                size = layout.width, layout.height;
                 offset_x = width/2;
                 offset_y = height/2;
+                println("offset_x " + offset_x);
+                println("offset_y " + offset_y);
 
-                max_radius =
-                    canvas.width < canvas.height ? canvas.width : canvas.height;
-                max_radius /= 2;
+                cir_radius   = 100;
+                outer_radius = 300;
                 //Hide the canvas frame
-                fill_pattern_color = TEST_PAGE_COLOR;
+                fill_pattern_color = color:black;
 
                 // This puts the bullseye in a frame
                 //fill_pattern_color = TEST_PAGE_STIMULUS_COLOR;
@@ -186,8 +181,8 @@ Page test_page
                 {
                     x = 0;
                     y = 0;
-                    radius = max_radius - max_radius / 8 * 0;
-                    fill_pattern_color = shape_colors[0];
+                    radius = cir_radius;
+                    fill_pattern_color = LIGHT_COLOR;
                     is_visible = true;
                 }
             }
@@ -196,10 +191,10 @@ Page test_page
             {
                 on_event:init()
                 {
-                    x = 0;
-                    y = 0;
-                    radius = max_radius - max_radius / 8 * 1;
-                    fill_pattern_color = shape_colors[1];
+                    x = sin(0 * TWOPI) * outer_radius;
+                    y = cos(0 * TWOPI) * outer_radius;
+                    radius = cir_radius; 
+                    fill_pattern_color = LIGHT_COLOR;
                     is_visible = true;
                 }
             }
@@ -208,10 +203,10 @@ Page test_page
             {
                 on_event:init()
                 {
-                    x = 0;
-                    y = 0;
-                    radius = max_radius - max_radius / 8 * 2;
-                    fill_pattern_color = shape_colors[2];
+                    x = sin(1.0/5.0 * TWOPI) * outer_radius;
+                    y = cos(1.0/5.0 * TWOPI) * outer_radius;
+                    radius = cir_radius;
+                    fill_pattern_color = LIGHT_COLOR;
                     is_visible = true;
                 }
             }
@@ -220,10 +215,10 @@ Page test_page
             {
                 on_event:init()
                 {
-                    x = 0;
-                    y = 0;
-                    radius = max_radius - max_radius / 8 * 3;
-                    fill_pattern_color = shape_colors[3];
+                    x = sin(2.0/5.0 * TWOPI) * outer_radius;
+                    y = cos(2.0/5.0 * TWOPI) * outer_radius;
+                    radius = cir_radius;
+                    fill_pattern_color = LIGHT_COLOR;
                     is_visible = true;
                 }
             }
@@ -232,10 +227,10 @@ Page test_page
             {
                 on_event:init()
                 {
-                    x = 0;
-                    y = 0;
-                    radius = max_radius - max_radius / 8 * 4;
-                    fill_pattern_color = shape_colors[4];
+                    x = sin(3.0/5.0 * TWOPI) * outer_radius;
+                    y = cos(3.0/5.0 * TWOPI) * outer_radius;
+                    radius = cir_radius;
+                    fill_pattern_color = LIGHT_COLOR;
                     is_visible = true;
                 }
             }
@@ -244,38 +239,13 @@ Page test_page
             {
                 on_event:init()
                 {
-                    x = 0;
-                    y = 0;
-                    radius = max_radius - max_radius / 8 * 5;
-                    fill_pattern_color = shape_colors[5];
+                    x = sin(4.0/5.0 * TWOPI) * outer_radius;
+                    y = cos(4.0/5.0 * TWOPI) * outer_radius;
+                    radius = cir_radius;
+                    fill_pattern_color = LIGHT_COLOR;
                     is_visible = true;
                 }
             }
-
-            CircleShape c6
-            {
-                on_event:init()
-                {
-                    x = 0;
-                    y = 0;
-                    radius = max_radius - max_radius / 8 * 6;
-                    fill_pattern_color = shape_colors[6];
-                    is_visible = true;
-                }
-            }
-
-            CircleShape c7
-            {
-                on_event:init()
-                {
-                    x = 0;
-                    y = 0;
-                    radius = max_radius - max_radius / 8 * 7;
-                    fill_pattern_color = shape_colors[7];
-                    is_visible = true;
-                }
-            }
-
         }
 
         void reset()
@@ -288,8 +258,6 @@ Page test_page
             canvas.c3.is_visible = false;
             canvas.c4.is_visible = false;
             canvas.c5.is_visible = false;
-            canvas.c6.is_visible = false;
-            canvas.c7.is_visible = false;
         }
 
         void start_stimulus(time t)
@@ -301,8 +269,6 @@ Page test_page
             canvas.c3.start(t);
             canvas.c4.start(t);
             canvas.c5.start(t);
-            canvas.c6.start(t);
-            canvas.c7.start(t);
         }
     }
 
