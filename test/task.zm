@@ -3,7 +3,6 @@ import hvf_event;
 import defs;
 import output;
 
-import fam_page;
 import test_page;
 import attention_page;
 import stimuli;
@@ -58,7 +57,6 @@ Block task
 
         on_event:exit()
         {
-            fam_page.stop_grid();
             save_fam_output();
         }
         
@@ -67,57 +65,17 @@ Block task
             on_event:entry()
             {
                 TestItem item = fam_items[familiarization.cycle];
-                
-                bool is_last = familiarization.cycle == familiarization.num_cycles - 1;
-                bool is_first = familiarization.cycle == 0;
-                
-                if (familiarization.cycle == 0) // start right after attention
-                    fam_page.action(
-                            this,
-                            reference_time,
-                            item,
-                            is_last,
-                            is_first
-                            );
-                else // start after isi.
-                    fam_page.action(
-                            this,
-                            reference_time + FAM_ISI,
-                            item,
-                            is_last,
-                            is_first
-                            );
-                
+                test_page.action(
+                        this,
+                        reference_time,
+                        item
+                        );
             }
 
             on_event:exit()
             {
                 TestOutput output;
 
-                output.trialnum = familiarization.cycle + 1;
-                if(fam_page.is_last) // report final
-                {
-                    output.lt       = int(fam_page.response.cumlt);
-                    output.nlt      = int(fam_page.response.cumnlt);
-                }
-                else
-                {
-                    if(fam_page.response.is_looking)
-                    {
-                        output.lt       = int(fam_page.response.cumlt 
-                                    + (event_time - fam_page.response.lookstart) );
-                        output.nlt      = int(fam_page.response.cumnlt);
-                    }
-                    else // !fam_page.response_is_looking
-                    {
-                        output.lt       = int(fam_page.response.cumlt);
-                        output.nlt      = int(fam_page.response.cumnlt
-                                    + (event_time - fam_page.response.nolookstart) );
-                    }
-                }
-                
-                output.looks    = fam_page.response.nlooks;
-                output.lookaways= fam_page.response.nlookaways;
                 output.phase    = PHASE_FAM;
 
                 fam_output_append (output);

@@ -165,7 +165,7 @@ Page test_page
                 // This puts the bullseye in a frame
                 //fill_pattern_color = TEST_PAGE_STIMULUS_COLOR;
 
-                is_visible = true;
+                is_visible = false;
             }
 
             on_event:start()
@@ -174,7 +174,11 @@ Page test_page
                 control.release_clock(event_time);
             }
 
-            // Make circle shapes that get smaller and smaller.
+            on_event:finish()
+            {
+                this.start(event_time + LIGHT_ISI, LIGHT_DURATION);
+            }
+
             CircleShape c0
             {
                 on_event:init()
@@ -252,23 +256,11 @@ Page test_page
         {
             full_abort();
             canvas.is_visible    = false;
-            canvas.c0.is_visible = false;
-            canvas.c1.is_visible = false;
-            canvas.c2.is_visible = false;
-            canvas.c3.is_visible = false;
-            canvas.c4.is_visible = false;
-            canvas.c5.is_visible = false;
         }
 
         void start_stimulus(time t)
         {
             canvas.start(t);
-            canvas.c0.start(t);
-            canvas.c1.start(t);
-            canvas.c2.start(t);
-            canvas.c3.start(t);
-            canvas.c4.start(t);
-            canvas.c5.start(t);
         }
     }
 
@@ -379,19 +371,20 @@ Page test_page
         audio.clip.file = stimuli_dir() + "sounds/" + item.snd_fn + ".wav";
     }
 
-    time action(Object      caller,
-                time        start,
-                int         trial_num,
-                bool        shuffle_colors = false 
+    time action(Object          caller,
+                time            start,
+                int             trial_num,
+                SoundDirection  dir
                 )
     {
         time tref      = test_window1.show_test_page(this, start);
+        
         nth_trial      = trial_num;        
         // Doesn't work because of std_baby_windows1.zm
         // test_window1.activate(); // to capture keyboard events.
         this.target    = caller;
 
-        audio.play(tref, SND_DIRECTION_FRONT);
+        audio.play(tref, Dir);
 
         response.start(tref);
         layout.start_stimulus(tref);
