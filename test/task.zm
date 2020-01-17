@@ -4,7 +4,6 @@ import defs;
 import output;
 
 import test_page;
-import attention_page;
 import stimuli;
 
 Block task
@@ -94,25 +93,13 @@ Block task
             save_output();
         }
             
-        on_event:entry()
-        {
-            attention_page.setup();
-
-            item_list = test_items;
-
-            if (MAX_TEST_TRIALS <= 0)
-                num_cycles = test_items.size;
-            else
-                num_cycles = MAX_TEST_TRIALS;
-        }
 
         Trial grab_attention
         {
             on_event:entry()
             {
-                test_page.setup(item_list);
-                attention_page.setup();
-                attention_page.action(this, reference_time, 0ms);
+                grab_attention.leave();
+                println("either remove or do something useful.");
             }
         }
 
