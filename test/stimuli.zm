@@ -10,9 +10,11 @@ enum ItemType
 
 record TestItem
 {
-    int         id;         // The id of the trial.
-    ItemType    type;       // What type of stimulus is presented.
-    string      snd_fn;     // Which stimulus is presented.
+    int             id;         // The id of the trial.
+    ItemType        type;       // What type of stimulus is presented.
+    string          snd_fn;     // Which stimulus is presented.
+    SoundDirection  dir;        // from which direction should the sound
+                                // be played.
 }
 
 TestItem[..] fam_items = {};
@@ -153,18 +155,18 @@ TestItem[] hab_items;
 
 TestItem[..] hab_items_3 =
 {
-    {1, HABITUATION, "ae-E continua/ae_3_01_48000"},
-    {2, HABITUATION, "ae-E continua/ae_3_02_48000"},
-    {3, HABITUATION, "ae-E continua/ae_3_03_48000"},
-    {4, HABITUATION, "ae-E continua/ae_3_04_48000"},
+    {1, HABITUATION, "ae-E continua/ae_3_01_48000", SND_DIRECTION_FRONT},
+    {2, HABITUATION, "ae-E continua/ae_3_02_48000", SND_DIRECTION_FRONT},
+    {3, HABITUATION, "ae-E continua/ae_3_03_48000", SND_DIRECTION_FRONT},
+    {4, HABITUATION, "ae-E continua/ae_3_04_48000", SND_DIRECTION_FRONT},
 };
 
 TestItem[..] hab_items_6 =
 {
-    {1, HABITUATION, "ae-E continua/ae_6_01_48000"},
-    {2, HABITUATION, "ae-E continua/ae_6_02_48000"},
-    {3, HABITUATION, "ae-E continua/ae_6_03_48000"},
-    {4, HABITUATION, "ae-E continua/ae_6_04_48000"},
+    {1, HABITUATION, "ae-E continua/ae_6_01_48000", SND_DIRECTION_FRONT},
+    {2, HABITUATION, "ae-E continua/ae_6_02_48000", SND_DIRECTION_FRONT},
+    {3, HABITUATION, "ae-E continua/ae_6_03_48000", SND_DIRECTION_FRONT},
+    {4, HABITUATION, "ae-E continua/ae_6_04_48000", SND_DIRECTION_FRONT},
 };
 
 /****** items for the test items ******/
@@ -173,18 +175,18 @@ TestItem[] test_items;
 
 TestItem[..] test_items_3 =
 {
-    {1, NOVEL, "ae-E continua/ae_3_01_48000"},
-    {2, NOVEL, "ae-E continua/ae_3_02_48000"},
-    {3, NOVEL, "ae-E continua/ae_3_03_48000"},
-    {4, NOVEL, "ae-E continua/ae_3_04_48000"},
+    {1, NOVEL, "ae-E continua/ae_3_01_48000", SND_DIRECTION_FRONT},
+    {2, NOVEL, "ae-E continua/ae_3_02_48000", SND_DIRECTION_FRONT},
+    {3, NOVEL, "ae-E continua/ae_3_03_48000", SND_DIRECTION_FRONT},
+    {4, NOVEL, "ae-E continua/ae_3_04_48000", SND_DIRECTION_FRONT},
 };
 
 TestItem[..] test_items_6 =
 {
-    {1, NOVEL, "ae-E continua/ae_6_01_48000"},
-    {2, NOVEL, "ae-E continua/ae_6_02_48000"},
-    {3, NOVEL, "ae-E continua/ae_6_03_48000"},
-    {4, NOVEL, "ae-E continua/ae_6_04_48000"},
+    {1, NOVEL, "ae-E continua/ae_6_01_48000", SND_DIRECTION_FRONT},
+    {2, NOVEL, "ae-E continua/ae_6_02_48000", SND_DIRECTION_FRONT},
+    {3, NOVEL, "ae-E continua/ae_6_03_48000", SND_DIRECTION_FRONT},
+    {4, NOVEL, "ae-E continua/ae_6_04_48000", SND_DIRECTION_FRONT},
 };
 
 /**
@@ -215,11 +217,6 @@ void prepare_test_items(int ppid)
     shuffle_hab_items();
     shuffle_test_items();
 }
-
-TestItem[..] attention_items =
-{
-    {1, ATTENTION, "bupoki-final"},
-};
 
 string[..] unimodal = {
     "ae_1_01",

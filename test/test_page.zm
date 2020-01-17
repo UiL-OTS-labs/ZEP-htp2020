@@ -373,8 +373,8 @@ Page test_page
 
     time action(Object          caller,
                 time            start,
-                int             trial_num,
-                SoundDirection  dir
+                TestItem        item,
+                int             trial_num
                 )
     {
         time tref      = test_window1.show_test_page(this, start);
@@ -384,7 +384,7 @@ Page test_page
         // test_window1.activate(); // to capture keyboard events.
         this.target    = caller;
 
-        audio.play(tref, Dir);
+        audio.play(tref, item.dir);
 
         response.start(tref);
         layout.start_stimulus(tref);
