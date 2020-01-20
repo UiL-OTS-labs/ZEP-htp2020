@@ -140,8 +140,9 @@ Page test_page
     {
         on_event:init()
         {
-            spacing     = 0;
-            size = 1920,1080;
+            spacing = 0;
+            size    = 1920,1080;
+            fill_pattern_color = color:black;
         }
 
         CanvasGadget canvas
@@ -154,16 +155,11 @@ Page test_page
                 size = layout.width, layout.height;
                 offset_x = width/2;
                 offset_y = height/2;
-                println("offset_x " + offset_x);
-                println("offset_y " + offset_y);
 
-                cir_radius   = 100;
-                outer_radius = 300;
+                cir_radius   = 50;
+                outer_radius = 200;
                 //Hide the canvas frame
                 fill_pattern_color = color:black;
-
-                // This puts the bullseye in a frame
-                //fill_pattern_color = TEST_PAGE_STIMULUS_COLOR;
 
                 is_visible = false;
             }
@@ -255,12 +251,13 @@ Page test_page
         void reset()
         {
             full_abort();
+            canvas.abort();
             canvas.is_visible    = false;
         }
 
-        void start_stimulus(time t)
+        void start_stimulus(time t, dur duration)
         {
-            canvas.start(t);
+            canvas.start(t, duration);
         }
     }
 
@@ -300,20 +297,9 @@ Page test_page
             output.stimulus = clip.file;
 
             stimulus_output_append(output);
-
-            // start the new audio stimulus
-            select_new_stimulus();
-
-            // always from front.
-            play(event_time + TEST_ISI, SND_DIRECTION_FRONT);
         }
 
-        void select_new_stimulus()
-        {
-            item = item_list[random(0, item_list.size)];
-        }
-
-        time play(time t, SoundDirection direction)
+        time play(time t, SoundDirection direction, string fn)
         {
             abort();
             dir = direction;
@@ -343,7 +329,7 @@ Page test_page
                 playback.set_scaling(CHANNEL_REAR_RIGHT, 0.0);
 
             playback.device = sound_output_device;
-            clip.file = stimuli_dir() + "sounds/" + item.snd_fn + ".wav";
+            clip.file = stimuli_dir() + "sounds/" +fn + ".wav";
 
             start(t);
             return expected_start_time;
@@ -384,10 +370,11 @@ Page test_page
         // test_window1.activate(); // to capture keyboard events.
         this.target    = caller;
 
-        audio.play(tref, item.dir);
+        audio.play(tref, item.dir, item.snd_fn);
 
         response.start(tref);
-        layout.start_stimulus(tref);
+        
+        layout.start_stimulus(tref, LIGHT_ISI);
 
         control.target = this;
         control.reset_clock();

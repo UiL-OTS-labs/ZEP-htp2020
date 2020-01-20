@@ -17,50 +17,34 @@ record TestItem
                                 // be played.
 }
 
-TestItem[..] fam_items = {};
-
 /**
- * Use randomize_list
+ * Can be expanded to multiple groups.
  */
-void prepare_fam_items()
-{
-    fam_items.shuffle(0, -1);
-}
+TestItem[..][..] fam_items = {
+    {
+        {1, FAMILIARISATION, "fam_xyx_0", SND_DIRECTION_FRONT},
+    },
+    {
+        {1, FAMILIARISATION, "fam_xyy_0", SND_DIRECTION_FRONT},
+    }
+};
 
 /****** items for the test items ******/
 
-TestItem[] test_items;
-
-TestItem[..] test_items_3 =
-{
+TestItem[..] test_items = {
     {1, NOVEL, "ae-E continua/ae_3_01_48000", SND_DIRECTION_FRONT},
     {2, NOVEL, "ae-E continua/ae_3_02_48000", SND_DIRECTION_FRONT},
     {3, NOVEL, "ae-E continua/ae_3_03_48000", SND_DIRECTION_FRONT},
     {4, NOVEL, "ae-E continua/ae_3_04_48000", SND_DIRECTION_FRONT},
 };
 
-TestItem[..] test_items_6 =
-{
-    {1, NOVEL, "ae-E continua/ae_6_01_48000", SND_DIRECTION_FRONT},
-    {2, NOVEL, "ae-E continua/ae_6_02_48000", SND_DIRECTION_FRONT},
-    {3, NOVEL, "ae-E continua/ae_6_03_48000", SND_DIRECTION_FRONT},
-    {4, NOVEL, "ae-E continua/ae_6_04_48000", SND_DIRECTION_FRONT},
-};
-
 void shuffle_test_items()
 {
-    test_items.shuffle(0, test_items.size);
+    test_items.shuffle(0, -1);
 }
 
 void prepare_test_items(int ppid)
 {
-    bool is_odd = ppid % 2 != 0;
-    if (is_odd) {
-        test_items  = test_items_3;
-    }
-    else {
-        test_items  = test_items_6;
-    }
     shuffle_test_items();
 }
 

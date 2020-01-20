@@ -46,10 +46,9 @@ Block task
     {
         on_event:entry()
         {
-            prepare_fam_items();
             num_cycles = fam_items.size;
             if (have_flag("short")) {
-                num_cycles = 5;
+                num_cycles = fam_items.size < 5 ? fam_items.size : 5;
             }
         }
 
@@ -62,7 +61,7 @@ Block task
         {
             on_event:entry()
             {
-                TestItem item = fam_items[familiarization.cycle];
+                TestItem item = fam_items[selected_group][familiarization.cycle];
                 test_page.action(
                         this,
                         reference_time,
@@ -99,7 +98,7 @@ Block task
             on_event:entry()
             {
                 grab_attention.leave();
-                println("either remove or do something useful.");
+                println("Either remove or do something useful.");
             }
         }
 
