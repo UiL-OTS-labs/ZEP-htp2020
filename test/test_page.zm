@@ -297,6 +297,8 @@ Page test_page
             output.stimulus = clip.file;
 
             stimulus_output_append(output);
+            
+            response.process_hit(event_time, EVENT_STOP_TIMER);
         }
 
         time play(time t, SoundDirection direction, string fn)
