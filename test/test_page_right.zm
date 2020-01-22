@@ -1,0 +1,144 @@
+
+Page test_page_right
+{
+    on_event:init()
+    {
+        fill_pattern_color = color:black;
+    }
+
+    VerticalLayout layout
+    {
+        on_event:init()
+        {
+            spacing = 0;
+            size    = 1920,1080;
+            fill_pattern_color = color:black;
+        }
+
+        CanvasGadget canvas
+        {
+            real cir_radius;
+            real outer_radius;
+
+            on_event:init()
+            {
+                size = layout.width, layout.height;
+                offset_x = width/2;
+                offset_y = height/2;
+
+                cir_radius   = 50;
+                outer_radius = 200;
+                //Hide the canvas frame
+                fill_pattern_color = color:black;
+
+                is_visible = false;
+            }
+
+            on_event:start()
+            {
+                //println("Releasing clock.");
+                control.release_clock(event_time);
+            }
+
+            on_event:finish()
+            {
+                this.start(event_time + LIGHT_ISI, LIGHT_DURATION);
+            }
+
+            CircleShape c0
+            {
+                on_event:init()
+                {
+                    x = 0;
+                    y = 0;
+                    radius = cir_radius;
+                    fill_pattern_color = LIGHT_COLOR;
+                    is_visible = true;
+                }
+            }
+
+            CircleShape c1
+            {
+                on_event:init()
+                {
+                    x = sin(0 * TWOPI) * outer_radius;
+                    y = cos(0 * TWOPI) * outer_radius;
+                    radius = cir_radius; 
+                    fill_pattern_color = LIGHT_COLOR;
+                    is_visible = true;
+                }
+            }
+
+            CircleShape c2
+            {
+                on_event:init()
+                {
+                    x = sin(1.0/5.0 * TWOPI) * outer_radius;
+                    y = cos(1.0/5.0 * TWOPI) * outer_radius;
+                    radius = cir_radius;
+                    fill_pattern_color = LIGHT_COLOR;
+                    is_visible = true;
+                }
+            }
+
+            CircleShape c3
+            {
+                on_event:init()
+                {
+                    x = sin(2.0/5.0 * TWOPI) * outer_radius;
+                    y = cos(2.0/5.0 * TWOPI) * outer_radius;
+                    radius = cir_radius;
+                    fill_pattern_color = LIGHT_COLOR;
+                    is_visible = true;
+                }
+            }
+
+            CircleShape c4
+            {
+                on_event:init()
+                {
+                    x = sin(3.0/5.0 * TWOPI) * outer_radius;
+                    y = cos(3.0/5.0 * TWOPI) * outer_radius;
+                    radius = cir_radius;
+                    fill_pattern_color = LIGHT_COLOR;
+                    is_visible = true;
+                }
+            }
+
+            CircleShape c5
+            {
+                on_event:init()
+                {
+                    x = sin(4.0/5.0 * TWOPI) * outer_radius;
+                    y = cos(4.0/5.0 * TWOPI) * outer_radius;
+                    radius = cir_radius;
+                    fill_pattern_color = LIGHT_COLOR;
+                    is_visible = true;
+                }
+            }
+        }
+
+        void reset()
+        {
+            full_abort();
+            canvas.abort();
+            canvas.is_visible    = false;
+        }
+
+        void start_stimulus(time t, dur duration)
+        {
+            canvas.start(t, duration);
+        }
+    }
+
+    void action(time t)
+    {
+        layout.start(t, LIGHT_ISI);
+    }
+
+    void clear()
+    {
+        layout.reset();
+    }
+}
+

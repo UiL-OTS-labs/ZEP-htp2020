@@ -1,23 +1,10 @@
 
-const real TWOPI = 3.14159265359 * 2.0;
-const color LIGHT_COLOR = rgbi:255/255/255;
-
-enum SoundDirection {
-    SND_DIRECTION_LEFT  = 1 << 0,
-    SND_DIRECTION_RIGHT = 1 << 1,
-    SND_DIRECTION_FRONT = 1 << 2
-};
-
-enum SoundChannel {
-    CHANNEL_FRONT_LEFT  = 0,
-    CHANNEL_FRONT_RIGHT = 1,
-    CHANNEL_REAR_LEFT   = 2,
-    CHANNEL_REAR_RIGHT  = 3
-};
+import defs;
+import test_page_right;
+import test_page_left;
 
 Page test_page
 {
-    TestItem[]  item_list;      // All presentable items.
     TestItem    item;           // the currently presented item.
     int         nth_trial;      // the number of the current trial.
 
@@ -63,6 +50,38 @@ Page test_page
     on_event:message()
     {
         response.process_hit(event_time, message_arg);
+        attention_resp.process_hit(event_time, message_arg);
+        side_resp.process_hit(event_time, message_arg);
+    }
+    
+    Response attention_resp
+    {
+        void process_hit(time t, int event)
+        {
+            HitType validity = hit(t);
+            
+            if (validity == HIT_VALID) {
+                if (event == EVENT_START_LOOKING) {
+                    ignore_remaining_hits();
+                    action_side(event_time);
+                }
+            }
+        }
+    }
+
+    Response side_resp
+    {
+        void process_hit(time t, int event)
+        {
+            HitType validity = hit(t);
+            
+            if (validity == HIT_VALID) {
+                if (event == EVENT_START_LOOKING) {
+                    ignore_remaining_hits();
+                    action_trial(event_time);
+                }
+            }
+        }
     }
 
     Response response
@@ -263,6 +282,8 @@ Page test_page
 
     SoundChain audio
     {
+        int nth_rep;
+
         SoundFile clip{}
         SoundPlayback playback{}
 
@@ -297,14 +318,24 @@ Page test_page
             output.stimulus = clip.file;
 
             stimulus_output_append(output);
-            
-            response.process_hit(event_time, EVENT_STOP_TIMER);
+
+            if (nth_rep < NUM_REPETITIONS){
+                this.play(
+                    event_time + TEST_ISI,
+                    item.dir,
+                    item.snd_fn
+                    );
+            }
+            else {
+                response.process_hit(event_time, EVENT_STOP_TIMER);
+            }
         }
 
         time play(time t, SoundDirection direction, string fn)
         {
             abort();
             dir = direction;
+            nth_rep += 1;
 
             playback.set_scaling(0.0); // all channels off.
 
@@ -336,6 +367,11 @@ Page test_page
             start(t);
             return expected_start_time;
         }
+
+        void clear()
+        {
+            nth_rep = 0;
+        }
     }
 
     void done(int message)
@@ -347,16 +383,12 @@ Page test_page
         abort_trial_timer.abort();
         control.erase_clock();
         control.hide_speaker_icon(FRONT_SIDE | LEFT_SIDE | RIGHT_SIDE);
+        test_page_right.clear();
+        test_page_left.clear();
     }
 
     void setup(TestItem[] items)
     {
-        // Load first audio file here.
-        item_list   = items;
-        item        = item_list[random(0, item_list.size)];
-
-        // preload the file
-        audio.clip.file = stimuli_dir() + "sounds/" + item.snd_fn + ".wav";
     }
 
     time action(Object          caller,
@@ -365,28 +397,51 @@ Page test_page
                 int             trial_num
                 )
     {
-        time tref      = test_window1.show_test_page(this, start);
+        this.item       = item;
+        time tref       = test_window1.show_test_page(this, start);
+        test_window_left.show_test_page(test_page_left, start);
+        test_window_right.show_test_page(test_page_right, start);
         
-        nth_trial      = trial_num;        
+        nth_trial       = trial_num;        
         // Doesn't work because of std_baby_windows1.zm
         // test_window1.activate(); // to capture keyboard events.
-        this.target    = caller;
+        this.target     = caller;
 
-        audio.play(tref, item.dir, item.snd_fn);
-
-        response.start(tref);
-        
+        attention_resp.start(tref);
         layout.start_stimulus(tref, LIGHT_ISI);
 
         control.target = this;
-        control.reset_clock();
-        control.begin_clock();
-        control.start_clock(tref);
-
-        if (MAX_TRIAL_DURATION > 0s)
-            max_trial_dur_timer.start(tref + MAX_TRIAL_DURATION);
 
         return tref;
+    }
+
+    time action_side(time start)
+    {
+        side_resp.start(now());
+        if (item.dir == SND_DIRECTION_LEFT) {
+            test_page_left.action(start);
+        }
+        else if (item.dir == SND_DIRECTION_RIGHT) {
+            test_page_right.action(start);
+        }
+        else {
+            print_error(
+                "Error: action_side(): not presenting from left or right\n"
+                );
+        }
+        return start;
+    }
+
+    time action_trial(time start)
+    {
+        control.reset_clock();
+        control.begin_clock();
+        control.start_clock(start);
+
+        audio.play(start + TEST_ISI, item.dir, item.snd_fn);
+
+
+        return start;
     }
 }
 

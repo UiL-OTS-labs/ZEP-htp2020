@@ -3,9 +3,10 @@
 enum ItemType
 {
     FAMILIARISATION,    // Stimulus from fam phase
-    HABITUATION,        // Stimulus from habituation phase
-    NOVEL,              // Stimulus from test phase
-    ATTENTION           // Stimulus to check the infants 
+    TEST1,
+    TEST2,
+    TEST3,
+    TEST4
 }
 
 record TestItem
@@ -31,18 +32,16 @@ TestItem[..][..] fam_items = {
 
 /****** items for the test items ******/
 
-TestItem[..] test_items = {
-    {1, NOVEL, "test_xyx_ba_po_ba_1", SND_DIRECTION_FRONT},
-    {2, NOVEL, "test_xyx_ba_po_ba_1", SND_DIRECTION_LEFT},
-    {3, NOVEL, "test_xyx_ba_po_ba_1", SND_DIRECTION_RIGHT},
-    {1, NOVEL, "test_xyx_ba_po_ba_1", SND_DIRECTION_FRONT},
-    {2, NOVEL, "test_xyx_ba_po_ba_1", SND_DIRECTION_LEFT},
-    {3, NOVEL, "test_xyx_ba_po_ba_1", SND_DIRECTION_RIGHT},
+TestItem[..] test_items1 = {
+    {1, TEST1, "test_xyx_ba_po_ba_1", SND_DIRECTION_LEFT},
+    {2, TEST1, "test_xyx_ba_po_ba_1", SND_DIRECTION_LEFT},
+    {3, TEST1, "test_xyx_ba_po_ba_1", SND_DIRECTION_RIGHT},
+    {4, TEST1, "test_xyx_ba_po_ba_1", SND_DIRECTION_RIGHT},
 };
 
 void shuffle_test_items()
 {
-    test_items.shuffle(0, -1);
+    test_items1.shuffle(0, -1);
 }
 
 void prepare_test_items(int ppid)
