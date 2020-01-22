@@ -32,10 +32,12 @@ TestItem[..][..] fam_items = {
 /****** items for the test items ******/
 
 TestItem[..] test_items = {
-    {1, NOVEL, "ae-E continua/ae_3_01_48000", SND_DIRECTION_FRONT},
-    {2, NOVEL, "ae-E continua/ae_3_02_48000", SND_DIRECTION_FRONT},
-    {3, NOVEL, "ae-E continua/ae_3_03_48000", SND_DIRECTION_FRONT},
-    {4, NOVEL, "ae-E continua/ae_3_04_48000", SND_DIRECTION_FRONT},
+    {1, NOVEL, "test_xyx_ba_po_ba_1", SND_DIRECTION_FRONT},
+    {2, NOVEL, "test_xyx_ba_po_ba_1", SND_DIRECTION_LEFT},
+    {3, NOVEL, "test_xyx_ba_po_ba_1", SND_DIRECTION_RIGHT},
+    {1, NOVEL, "test_xyx_ba_po_ba_1", SND_DIRECTION_FRONT},
+    {2, NOVEL, "test_xyx_ba_po_ba_1", SND_DIRECTION_LEFT},
+    {3, NOVEL, "test_xyx_ba_po_ba_1", SND_DIRECTION_RIGHT},
 };
 
 void shuffle_test_items()

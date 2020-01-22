@@ -4,6 +4,7 @@ import defs;
 import output;
 
 import test_page;
+import fam_page;
 import stimuli;
 
 Block task
@@ -62,11 +63,10 @@ Block task
             on_event:entry()
             {
                 TestItem item = fam_items[selected_group][familiarization.cycle];
-                test_page.action(
+                fam_page.action(
                         this,
                         reference_time,
-                        item,
-                        familiarization.cycle
+                        item
                         );
             }
 
@@ -92,21 +92,11 @@ Block task
             save_output();
         }
             
-
-        Trial grab_attention
-        {
-            on_event:entry()
-            {
-                grab_attention.leave();
-                println("Either remove or do something useful.");
-            }
-        }
-
         Trial trial
         {
             on_event:entry()
             {
-                TestItem item = test_items[test.cycle];
+                TestItem item = test_items1[test.cycle];
                 test_page.action(
                         this,
                         reference_time,

@@ -1,0 +1,333 @@
+
+import defs;
+
+Page fam_page
+{
+    on_event:init()
+    {
+        fill_pattern_color = color:black;
+    }
+
+    // Key press doesn't work properly since the baby window is a output
+    // only window.
+    on_event:key_press()
+    {
+        if      (input_key == KEY_Shift_L)
+            response.process_hit(event_time, EVENT_STOP_LOOKING);
+        else if (input_key == KEY_Shift_R)
+            response.process_hit(event_time, EVENT_START_LOOKING);
+        else
+            handle_special_key(this, input_key, input_modifiers);
+    }
+
+    on_event:message()
+    {
+        response.process_hit(event_time, message_arg);
+    }
+
+    Response response
+    {
+        bool    is_looking;
+        time    lookstart;
+        time    nolookstart;
+        dur     cumlt;
+        dur     cumnlt;
+        int     nlookaways;
+        int     nlooks;
+
+        on_event:start()
+        {
+            clear();
+            lookstart = event_time;
+            // assume the child is looking.
+            is_looking = true;
+        }
+
+        void clear()
+        {
+            is_looking  = true;
+            lookstart   = time(0);
+            nolookstart = time(0);
+            cumlt       = 0ms;
+            cumnlt      = 0ms;
+            nlookaways  = 0;
+            nlooks      = 1; // The infant is always looking at the start
+                             // of the trial.
+        }
+
+        void process_hit(time t, int event)
+        {
+            HitType validity = hit(t);
+            
+            if (validity == HIT_VALID) {
+                if (event == EVENT_STOP_LOOKING) { // start abort timer
+                    if (!is_looking)
+                        return; // ignore, because we weren't looking.
+                    is_looking = false;
+                    nolookstart = t;
+                    cumlt += (t - lookstart);
+
+                    control.stop_clock(t);
+                    nlookaways++;
+                }
+                else if (event == EVENT_START_LOOKING) {
+                    if(is_looking)
+                        return; // ignore, because we already were looking.
+                    is_looking = true;
+                    lookstart = t;
+                    cumnlt += (t - nolookstart);
+
+                    control.start_clock(t);
+                    nlooks++;
+                }
+                else if (event == EVENT_STOP_TIMER) {
+                    if (is_looking)
+                        cumlt += (t - lookstart);
+                    else
+                        cumnlt+= (t - nolookstart);
+
+                    // abort trial
+                    done(CONTINUE);
+                }
+            }
+        }
+    }
+
+    VerticalLayout layout
+    {
+        on_event:init()
+        {
+            spacing = 0;
+            size    = 1920,1080;
+            fill_pattern_color = color:black;
+        }
+
+        CanvasGadget canvas
+        {
+            real cir_radius;
+            real outer_radius;
+
+            on_event:init()
+            {
+                size = layout.width, layout.height;
+                offset_x = width/2;
+                offset_y = height/2;
+
+                cir_radius   = 50;
+                outer_radius = 200;
+                //Hide the canvas frame
+                fill_pattern_color = color:black;
+
+                is_visible = false;
+            }
+
+            on_event:start()
+            {
+                control.release_clock(event_time);
+            }
+
+            on_event:finish()
+            {
+                this.start(event_time + LIGHT_ISI, LIGHT_DURATION);
+            }
+
+            CircleShape c0
+            {
+                on_event:init()
+                {
+                    x = 0;
+                    y = 0;
+                    radius = cir_radius;
+                    fill_pattern_color = LIGHT_COLOR;
+                    is_visible = true;
+                }
+            }
+
+            CircleShape c1
+            {
+                on_event:init()
+                {
+                    x = sin(0 * TWOPI) * outer_radius;
+                    y = cos(0 * TWOPI) * outer_radius;
+                    radius = cir_radius; 
+                    fill_pattern_color = LIGHT_COLOR;
+                    is_visible = true;
+                }
+            }
+
+            CircleShape c2
+            {
+                on_event:init()
+                {
+                    x = sin(1.0/5.0 * TWOPI) * outer_radius;
+                    y = cos(1.0/5.0 * TWOPI) * outer_radius;
+                    radius = cir_radius;
+                    fill_pattern_color = LIGHT_COLOR;
+                    is_visible = true;
+                }
+            }
+
+            CircleShape c3
+            {
+                on_event:init()
+                {
+                    x = sin(2.0/5.0 * TWOPI) * outer_radius;
+                    y = cos(2.0/5.0 * TWOPI) * outer_radius;
+                    radius = cir_radius;
+                    fill_pattern_color = LIGHT_COLOR;
+                    is_visible = true;
+                }
+            }
+
+            CircleShape c4
+            {
+                on_event:init()
+                {
+                    x = sin(3.0/5.0 * TWOPI) * outer_radius;
+                    y = cos(3.0/5.0 * TWOPI) * outer_radius;
+                    radius = cir_radius;
+                    fill_pattern_color = LIGHT_COLOR;
+                    is_visible = true;
+                }
+            }
+
+            CircleShape c5
+            {
+                on_event:init()
+                {
+                    x = sin(4.0/5.0 * TWOPI) * outer_radius;
+                    y = cos(4.0/5.0 * TWOPI) * outer_radius;
+                    radius = cir_radius;
+                    fill_pattern_color = LIGHT_COLOR;
+                    is_visible = true;
+                }
+            }
+        }
+
+        void reset()
+        {
+            full_abort();
+            canvas.abort();
+            canvas.is_visible    = false;
+        }
+
+        void start_stimulus(time t, dur duration)
+        {
+            canvas.start(t, duration);
+        }
+    }
+
+    SoundChain audio
+    {
+        SoundFile clip{}
+        SoundPlayback playback{}
+
+        SoundDirection dir;
+
+        on_event:start()
+        {
+            int lights = 0;
+            if (dir & SND_DIRECTION_LEFT)
+                lights |= LEFT_SIDE;
+            if (dir & SND_DIRECTION_FRONT)
+                lights |= FRONT_SIDE;
+            if (dir & SND_DIRECTION_RIGHT)
+                lights |= RIGHT_SIDE;
+
+            control.hide_speaker_icon(FRONT_SIDE | LEFT_SIDE | RIGHT_SIDE);
+            control.show_speaker_icon(lights);
+        }
+
+        on_event:finish()
+        {
+            control.hide_speaker_icon(FRONT_SIDE | LEFT_SIDE | RIGHT_SIDE);
+
+            StimOutput output;
+            time begin = zero_time();
+            output.trial    = 1;
+            output.tstart   = int(start_time - begin);
+            output.tend     = int(finish_time - begin);
+            output.stimulus = clip.file;
+
+            stimulus_output_append(output);
+            
+            response.process_hit(event_time, EVENT_STOP_TIMER);
+        }
+
+        time play(time t, SoundDirection direction, string fn)
+        {
+            abort();
+            dir = direction;
+
+            playback.set_scaling(0.0); // all channels off.
+
+            // Turn scaling back on for the proper channels
+            // keep in mind that the front right isn't wired (2017)
+            // and the front left represents the front.
+            if (dir & SND_DIRECTION_FRONT) {
+                playback.set_scaling(CHANNEL_FRONT_LEFT , 1.0);
+                playback.set_scaling(CHANNEL_FRONT_RIGHT, 1.0);
+            }
+            else {
+                playback.set_scaling(CHANNEL_FRONT_LEFT , 0.0);
+                playback.set_scaling(CHANNEL_FRONT_RIGHT, 0.0);
+            }
+
+            if (dir & SND_DIRECTION_LEFT)
+                playback.set_scaling(CHANNEL_REAR_LEFT, 1.0);
+            else 
+                playback.set_scaling(CHANNEL_REAR_LEFT, 0.0);
+            
+            if (dir & SND_DIRECTION_RIGHT)
+                playback.set_scaling(CHANNEL_REAR_RIGHT, 1.0);
+            else 
+                playback.set_scaling(CHANNEL_REAR_RIGHT, 0.0);
+
+            playback.device = sound_output_device;
+            clip.file = stimuli_dir() + "sounds/" +fn + ".wav";
+
+            start(t);
+            return expected_start_time;
+        }
+    }
+
+    void done(int message)
+    {
+        signal_target(message);
+        audio.abort();
+        layout.reset();
+        control.erase_clock();
+        control.hide_speaker_icon(FRONT_SIDE | LEFT_SIDE | RIGHT_SIDE);
+    }
+
+    void setup()
+    {
+    }
+
+    time action(Object          caller,
+                time            start,
+                TestItem        item
+                )
+    {
+        time tref      = test_window1.show_test_page(this, start);
+        
+        // Doesn't work because of std_baby_windows1.zm
+        // test_window1.activate(); // to capture keyboard events.
+        this.target    = caller;
+
+        audio.play(tref, item.dir, item.snd_fn);
+
+        response.start(tref);
+        
+        layout.start_stimulus(tref, LIGHT_ISI);
+
+        control.target = this;
+        control.reset_clock();
+        control.begin_clock();
+        control.start_clock(tref);
+
+        return tref;
+    }
+}
+
+
