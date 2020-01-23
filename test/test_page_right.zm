@@ -133,7 +133,7 @@ Page test_page_right
 
     void action(time t)
     {
-        layout.start(t, LIGHT_ISI);
+        layout.start_stimulus(t, LIGHT_ISI);
     }
 
     void clear()
