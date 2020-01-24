@@ -34,12 +34,6 @@ Page test_page_right
                 is_visible = false;
             }
 
-            on_event:start()
-            {
-                //println("Releasing clock.");
-                control.release_clock(event_time);
-            }
-
             on_event:finish()
             {
                 this.start(event_time + LIGHT_ISI, LIGHT_DURATION);
@@ -127,6 +121,7 @@ Page test_page_right
 
         void start_stimulus(time t, dur duration)
         {
+            println("start stim right");
             canvas.start(t, duration);
         }
     }

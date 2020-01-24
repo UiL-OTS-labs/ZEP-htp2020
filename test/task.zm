@@ -85,7 +85,10 @@ Block task
 
     Block test
     {
-        TestItem[] item_list;
+        on_event:entry()
+        {
+            num_cycles = test_items1.size;
+        }
 
         on_event:exit()
         {

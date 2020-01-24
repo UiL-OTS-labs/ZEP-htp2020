@@ -78,7 +78,7 @@ Page test_page
             if (validity == HIT_VALID) {
                 if (event == EVENT_START_LOOKING) {
                     ignore_remaining_hits();
-                    action_trial(event_time);
+                    action_trial(t);
                 }
             }
         }
@@ -417,12 +417,17 @@ Page test_page
 
     time action_side(time start)
     {
-        side_resp.start(now());
+        time current = now();
+        side_resp.start(current);
+        test_page_left.clear();
+        test_page_right.clear();
+        layout.reset();
+
         if (item.dir == SND_DIRECTION_LEFT) {
-            test_page_left.action(start);
+            test_page_left.action(current);
         }
         else if (item.dir == SND_DIRECTION_RIGHT) {
-            test_page_right.action(start);
+            test_page_right.action(current);
         }
         else {
             print_error(
@@ -439,7 +444,7 @@ Page test_page
         control.start_clock(start);
 
         audio.play(start + TEST_ISI, item.dir, item.snd_fn);
-
+        response.start(start);
 
         return start;
     }
