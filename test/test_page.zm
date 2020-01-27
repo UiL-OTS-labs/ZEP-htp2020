@@ -377,6 +377,7 @@ Page test_page
     void done(int message)
     {
         audio.abort();
+        audio.clear();
         signal_target(message);
         layout.reset();
         max_trial_dur_timer.abort();
