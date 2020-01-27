@@ -187,11 +187,13 @@ Page test_page
             {
                 //println("Releasing clock.");
                 control.release_clock(event_time);
+		control.start_light(FRONT_SIDE);
             }
 
             on_event:finish()
             {
                 this.start(event_time + LIGHT_ISI, LIGHT_DURATION);
+		control.stop_light(FRONT_SIDE);
             }
 
             CircleShape c0
@@ -384,6 +386,7 @@ Page test_page
         abort_trial_timer.abort();
         control.erase_clock();
         control.hide_speaker_icon(FRONT_SIDE | LEFT_SIDE | RIGHT_SIDE);
+        control.stop_light(FRONT_SIDE | RIGHT_SIDE | LEFT_SIDE);
         test_page_right.clear();
         test_page_left.clear();
     }
@@ -402,6 +405,7 @@ Page test_page
         time tref       = test_window1.show_test_page(this, start);
         test_window_left.show_test_page(test_page_left, start);
         test_window_right.show_test_page(test_page_right, start);
+        control.stop_light(FRONT_SIDE | RIGHT_SIDE | LEFT_SIDE);
         
         nth_trial       = trial_num;        
         // Doesn't work because of std_baby_windows1.zm
@@ -423,6 +427,7 @@ Page test_page
         test_page_left.clear();
         test_page_right.clear();
         layout.reset();
+        control.stop_light(FRONT_SIDE | RIGHT_SIDE | LEFT_SIDE);
 
         if (item.dir == SND_DIRECTION_LEFT) {
             test_page_left.action(current);
@@ -443,6 +448,7 @@ Page test_page
         control.reset_clock();
         control.begin_clock();
         control.start_clock(start);
+        control.stop_light(FRONT_SIDE | RIGHT_SIDE | LEFT_SIDE);
 
         audio.play(start + TEST_ISI, item.dir, item.snd_fn);
         response.start(start);

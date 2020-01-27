@@ -124,11 +124,13 @@ Page fam_page
             on_event:start()
             {
                 control.release_clock(event_time);
+                control.start_light(FRONT_SIDE);
             }
 
             on_event:finish()
             {
                 this.start(event_time + LIGHT_ISI, LIGHT_DURATION);
+                control.stop_light(FRONT_SIDE);
             }
 
             CircleShape c0

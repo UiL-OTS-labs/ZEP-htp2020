@@ -43,43 +43,43 @@ Block task
 
     //--------- Familiarization -------
 
-//    Block familiarization
-//    {
-//        on_event:entry()
-//        {
-//            num_cycles = fam_items[selected_group].size;
-//            if (have_flag("short")) {
-//                num_cycles = fam_items.size < 5 ? fam_items.size : 5;
-//            }
-//        }
-//
-//        on_event:exit()
-//        {
-//            save_fam_output();
-//        }
-//        
-//        Trial trial
-//        {
-//            on_event:entry()
-//            {
-//                TestItem item = fam_items[selected_group][familiarization.cycle];
-//                fam_page.action(
-//                        this,
-//                        reference_time,
-//                        item
-//                        );
-//            }
-//
-//            on_event:exit()
-//            {
-//                TestOutput output;
-//
-//                output.phase    = PHASE_FAM;
-//
-//                fam_output_append (output);
-//            }
-//        }
-//    }
+    Block familiarization
+    {
+        on_event:entry()
+        {
+            num_cycles = fam_items[selected_group].size;
+            if (have_flag("short")) {
+                num_cycles = fam_items.size < 5 ? fam_items.size : 5;
+            }
+        }
+
+        on_event:exit()
+        {
+            save_fam_output();
+        }
+        
+        Trial trial
+        {
+            on_event:entry()
+            {
+                TestItem item = fam_items[selected_group][familiarization.cycle];
+                fam_page.action(
+                        this,
+                        reference_time,
+                        item
+                        );
+            }
+
+            on_event:exit()
+            {
+                TestOutput output;
+
+                output.phase    = PHASE_FAM;
+
+                fam_output_append (output);
+            }
+        }
+    }
 
     //--------- Test -----------
 

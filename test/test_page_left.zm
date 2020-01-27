@@ -34,9 +34,16 @@ Page test_page_left
                 is_visible = false;
             }
 
+            on_event:start()
+            {
+                control.start_light(LEFT_SIDE);
+            }
+
+
             on_event:finish()
             {
                 this.start(event_time + LIGHT_ISI, LIGHT_DURATION);
+                control.stop_light(LEFT_SIDE);
             }
 
             CircleShape c0
@@ -121,7 +128,6 @@ Page test_page_left
 
         void start_stimulus(time t, dur duration)
         {
-            println("start stim left");
             canvas.start(t, duration);
         }
     }
