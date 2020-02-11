@@ -48,9 +48,6 @@ Block task
         on_event:entry()
         {
             num_cycles = fam_items[selected_group].size;
-            if (have_flag("short")) {
-                num_cycles = fam_items.size < 5 ? fam_items.size : 5;
-            }
         }
 
         on_event:exit()
