@@ -23,20 +23,20 @@ record TestItem
  */
 TestItem[..][..] fam_items = {
     {
-        {1, FAMILIARISATION, "fam_xyx_0", SND_DIRECTION_FRONT},
+        {1, FAMILIARISATION, "fam_xyx_0_48000", SND_DIRECTION_FRONT},
     },
     {
-        {1, FAMILIARISATION, "fam_xyy_0", SND_DIRECTION_FRONT},
+        {1, FAMILIARISATION, "fam_xyy_0_48000", SND_DIRECTION_FRONT},
     }
 };
 
 /****** items for the test items ******/
 
 TestItem[..] test_items1 = {
-    {1, TEST1, "test_xyx_ba_po_ba_1", SND_DIRECTION_LEFT},
-    {2, TEST1, "test_xyx_ba_po_ba_1", SND_DIRECTION_LEFT},
-    {3, TEST1, "test_xyx_ba_po_ba_1", SND_DIRECTION_RIGHT},
-    {4, TEST1, "test_xyx_ba_po_ba_1", SND_DIRECTION_RIGHT},
+    {1, TEST1, "test_xyx_ba_po_ba_48000", SND_DIRECTION_LEFT},
+    {2, TEST1, "test_xyx_ba_po_ba_48000", SND_DIRECTION_LEFT},
+    {3, TEST1, "test_xyx_ba_po_ba_48000", SND_DIRECTION_RIGHT},
+    {4, TEST1, "test_xyx_ba_po_ba_48000", SND_DIRECTION_RIGHT},
 };
 
 void shuffle_test_items()
