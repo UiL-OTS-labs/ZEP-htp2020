@@ -52,67 +52,7 @@ Page test_page_right
                     x = 0;
                     y = 0;
                     radius = cir_radius;
-                    fill_pattern_color = LIGHT_COLOR;
-                    is_visible = true;
-                }
-            }
-
-            CircleShape c1
-            {
-                on_event:init()
-                {
-                    x = sin(0 * TWOPI) * outer_radius;
-                    y = cos(0 * TWOPI) * outer_radius;
-                    radius = cir_radius; 
-                    fill_pattern_color = LIGHT_COLOR;
-                    is_visible = true;
-                }
-            }
-
-            CircleShape c2
-            {
-                on_event:init()
-                {
-                    x = sin(1.0/5.0 * TWOPI) * outer_radius;
-                    y = cos(1.0/5.0 * TWOPI) * outer_radius;
-                    radius = cir_radius;
-                    fill_pattern_color = LIGHT_COLOR;
-                    is_visible = true;
-                }
-            }
-
-            CircleShape c3
-            {
-                on_event:init()
-                {
-                    x = sin(2.0/5.0 * TWOPI) * outer_radius;
-                    y = cos(2.0/5.0 * TWOPI) * outer_radius;
-                    radius = cir_radius;
-                    fill_pattern_color = LIGHT_COLOR;
-                    is_visible = true;
-                }
-            }
-
-            CircleShape c4
-            {
-                on_event:init()
-                {
-                    x = sin(3.0/5.0 * TWOPI) * outer_radius;
-                    y = cos(3.0/5.0 * TWOPI) * outer_radius;
-                    radius = cir_radius;
-                    fill_pattern_color = LIGHT_COLOR;
-                    is_visible = true;
-                }
-            }
-
-            CircleShape c5
-            {
-                on_event:init()
-                {
-                    x = sin(4.0/5.0 * TWOPI) * outer_radius;
-                    y = cos(4.0/5.0 * TWOPI) * outer_radius;
-                    radius = cir_radius;
-                    fill_pattern_color = LIGHT_COLOR;
+                    fill_pattern_color = SIDE_COLOR;
                     is_visible = true;
                 }
             }

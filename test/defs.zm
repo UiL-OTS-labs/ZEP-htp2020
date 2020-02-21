@@ -9,19 +9,19 @@ const dur  LIGHT_DURATION               = 250ms;
 // test/habituation phase.
 
 const dur  TEST_ISI                     = 125ms;
-const int  MAX_HABITUATION_TRIALS	    = 25;
+const int  MAX_HABITUATION_TRIAL        = 25;
 const int  MAX_TEST_TRIALS              = 2;        // Max number of test trials
                                                     // if <= 0 the number
                                                     // of test items.
 const int  MAX_ATTENTION_TRIALS         = 1;        // max attention trials.
-const real HABITUATION_CRITERION	    = 65.0;
-const dur  MAX_LOOK_AWAY_DURATION	    = 2000ms;
+const real HABITUATION_CRITERION        = 65.0;
+const dur  MAX_LOOK_AWAY_DURATION       = 2000ms;
 const dur  CLOCK_UPDATE_PERIOD          = 20ms;
 
 const int NUM_REPETITIONS = 6;
 
-const real TWOPI = 3.14159265359 * 2.0;
-const color LIGHT_COLOR = rgbi:255/255/255;
+const color FRONT_COLOR                 = rgbi:0/255/0;
+const color SIDE_COLOR                  = rgbi:255/0/0;
 
 enum SoundDirection {
     SND_DIRECTION_LEFT  = 1 << 0,
