@@ -84,7 +84,7 @@ Block task
     {
         on_event:entry()
         {
-            num_cycles = test_items1.size;
+            num_cycles = test_items.size;
         }
 
         on_event:exit()
@@ -96,7 +96,7 @@ Block task
         {
             on_event:entry()
             {
-                TestItem item = test_items1[test.cycle];
+                TestItem item = test_items[test.cycle];
                 test_page.action(
                         this,
                         reference_time,

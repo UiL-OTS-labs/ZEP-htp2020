@@ -1,5 +1,4 @@
 
-
 enum ItemType
 {
     FAMILIARISATION,    // Stimulus from fam phase
@@ -18,6 +17,21 @@ record TestItem
                                 // be played.
 }
 
+void append_test_item(TestItem[] items, TestItem item)
+{
+    items.size = items.size + 1;
+    items[items.size - 1] = item;
+}
+
+void append_test_items(TestItem[] items1, TestItem[] items2)
+{
+    int i = 0;
+    while (i < items2.size) {
+        append_test_item(items1, items2[i]);
+        i++;
+    }
+}
+
 /**
  * Can be expanded to multiple groups.
  */
@@ -33,19 +47,43 @@ TestItem[..][..] fam_items = {
 /****** items for the test items ******/
 
 TestItem[..] test_items1 = {
-    {1, TEST1, "test_xyx_ba_po_ba_48000", SND_DIRECTION_LEFT},
-    {2, TEST1, "test_xyx_ba_po_ba_48000", SND_DIRECTION_LEFT},
-    {3, TEST1, "test_xyx_ba_po_ba_48000", SND_DIRECTION_RIGHT},
-    {4, TEST1, "test_xyx_ba_po_ba_48000", SND_DIRECTION_RIGHT},
+    {1,  TEST1, "test_xyx_ba_po_ba", SND_DIRECTION_LEFT},
+    {2,  TEST1, "test_xyx_ko_ga_ko", SND_DIRECTION_LEFT},
+    {3,  TEST1, "test_xyy_ba_po_po", SND_DIRECTION_RIGHT},
+    {4,  TEST1, "test_xyy_ko_ga_ga", SND_DIRECTION_RIGHT},
+};
+
+TestItem[..] test_items2 = {
+    {5,  TEST2, "test_xyx_ba_po_ba", SND_DIRECTION_RIGHT},
+    {6,  TEST2, "test_xyx_ko_ga_ko", SND_DIRECTION_RIGHT},
+    {7,  TEST2, "test_xyy_ba_po_po", SND_DIRECTION_LEFT},
+    {8,  TEST2, "test_xyy_ko_ga_ga", SND_DIRECTION_LEFT},
+};
+
+TestItem[..] test_items3 = {
+    {9,  TEST3, "test_xyx_ba_po_ba", SND_DIRECTION_LEFT},
+    {10, TEST3, "test_xyx_ko_ga_ko", SND_DIRECTION_LEFT},
+    {11, TEST3, "test_xyy_ba_po_po", SND_DIRECTION_RIGHT},
+    {12, TEST3, "test_xyy_ko_ga_ga", SND_DIRECTION_RIGHT},
+};
+
+TestItem[..] test_items = {
 };
 
 void shuffle_test_items()
 {
     test_items1.shuffle(0, -1);
+    test_items2.shuffle(0, -1);
+    test_items3.shuffle(0, -1);
 }
 
 void prepare_test_items(int ppid)
 {
     shuffle_test_items();
+    
+    // Append the items to the test items.
+    append_test_items(test_items, test_items1);
+    append_test_items(test_items, test_items2);
+    append_test_items(test_items, test_items3);
 }
 
