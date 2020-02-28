@@ -51,17 +51,17 @@ TestItem[..][..] fam_items = {
 /****** items for the test items ******/
 
 TestItem[..] test_items_a = {
-    {1,  TESTA, "test_xyx_ba_po_ba", SND_DIRECTION_LEFT},
-    {2,  TESTA, "test_xyx_ko_ga_ko", SND_DIRECTION_RIGHT},
-    {3,  TESTA, "test_xyy_ba_po_po", SND_DIRECTION_LEFT},
-    {4,  TESTA, "test_xyy_ko_ga_ga", SND_DIRECTION_RIGHT},
+    {1,  TESTA, "test_xyx_ba_po_ba_48000", SND_DIRECTION_LEFT},
+    {2,  TESTA, "test_xyx_ko_ga_ko_48000", SND_DIRECTION_RIGHT},
+    {3,  TESTA, "test_xyy_ba_po_po_48000", SND_DIRECTION_LEFT},
+    {4,  TESTA, "test_xyy_ko_ga_ga_48000", SND_DIRECTION_RIGHT},
 };
 
 TestItem[..] test_items_b = {
-    {5,  TESTB, "test_xyx_ba_po_ba", SND_DIRECTION_RIGHT},
-    {6,  TESTB, "test_xyx_ko_ga_ko", SND_DIRECTION_LEFT},
-    {7,  TESTB, "test_xyy_ba_po_po", SND_DIRECTION_RIGHT},
-    {8,  TESTB, "test_xyy_ko_ga_ga", SND_DIRECTION_LEFT},
+    {5,  TESTB, "test_xyx_ba_po_ba_48000", SND_DIRECTION_RIGHT},
+    {6,  TESTB, "test_xyx_ko_ga_ko_48000", SND_DIRECTION_LEFT},
+    {7,  TESTB, "test_xyy_ba_po_po_48000", SND_DIRECTION_RIGHT},
+    {8,  TESTB, "test_xyy_ko_ga_ga_48000", SND_DIRECTION_LEFT},
 };
 
 TestItem[..] test_items = {
