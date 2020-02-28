@@ -94,6 +94,12 @@ Page test_page
         int     nlookaways;
         int     nlooks;
 
+        on_event:init()
+        {
+            // avoid bouncing buttons.
+            min_hit_interval = 100ms;
+        }
+
         on_event:start()
         {
             clear();
