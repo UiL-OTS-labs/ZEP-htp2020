@@ -1,8 +1,10 @@
 
 enum TestGroup
 {
-    FAM_XYX,
-    FAM_XYY
+    FAM_XYX_A,
+    FAM_XYY_A,
+    FAM_XYX_B,
+    FAM_XYY_B,
 }
 
 int assign_participant_to_group()
