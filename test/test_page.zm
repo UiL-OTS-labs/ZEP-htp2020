@@ -330,6 +330,9 @@ Page test_page
         layout.reset();
         max_trial_dur_timer.abort();
         abort_trial_timer.abort();
+        attention_resp.abort();
+        side_resp.abort();
+        response.abort();
         control.erase_clock();
         control.hide_speaker_icon(FRONT_SIDE | LEFT_SIDE | RIGHT_SIDE);
         control.stop_light(FRONT_SIDE | RIGHT_SIDE | LEFT_SIDE);
