@@ -395,7 +395,7 @@ Page test_page
     time action_trial(time start)
     {
         control.reset_clock();
-        control.begin_clock();
+        control.begin_clock(true);
         control.start_clock(start);
         control.stop_light(FRONT_SIDE | RIGHT_SIDE | LEFT_SIDE);
 
