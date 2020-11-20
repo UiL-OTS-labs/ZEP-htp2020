@@ -30,22 +30,55 @@ void append_test_items(TestItem[] items1, TestItem[] items2)
     }
 }
 
-/**
- * Can be expanded to multiple groups.
- */
 TestItem[..][..] fam_items = {
     {
-        {1, FAMILIARISATION, "fam_xyx_0_48000", SND_DIRECTION_FRONT},
+        {1, FAMILIARISATION, "fam_xyx_0", SND_DIRECTION_FRONT},
     },
     {
-        {1, FAMILIARISATION, "fam_xyy_0_48000", SND_DIRECTION_FRONT},
+        {1, FAMILIARISATION, "fam_xyx_1", SND_DIRECTION_RIGHT},
     },
     {
-        {1, FAMILIARISATION, "fam_xyx_0_48000", SND_DIRECTION_FRONT},
+        {1, FAMILIARISATION, "fam_xyx_2", SND_DIRECTION_LEFT},
     },
     {
-        {1, FAMILIARISATION, "fam_xyy_0_48000", SND_DIRECTION_FRONT},
-    }
+        {1, FAMILIARISATION, "fam_xyx_3", SND_DIRECTION_FRONT},
+    },
+    {
+        {1, FAMILIARISATION, "fam_xyx_4", SND_DIRECTION_RIGHT},
+    },
+    {
+        {1, FAMILIARISATION, "fam_xyx_5", SND_DIRECTION_LEFT},
+    },
+    {
+        {1, FAMILIARISATION, "fam_xyx_6", SND_DIRECTION_FRONT},
+    },
+    {
+        {1, FAMILIARISATION, "fam_xyx_7", SND_DIRECTION_RIGHT},
+    },
+    {
+        {1, FAMILIARISATION, "fam_xyy_0", SND_DIRECTION_LEFT},
+    },
+    {
+        {1, FAMILIARISATION, "fam_xyy_1", SND_DIRECTION_FRONT},
+    },
+    {
+        {1, FAMILIARISATION, "fam_xyy_2", SND_DIRECTION_RIGHT},
+    },
+    {
+        {1, FAMILIARISATION, "fam_xyy_3", SND_DIRECTION_LEFT},
+    },
+    {
+        {1, FAMILIARISATION, "fam_xyy_4", SND_DIRECTION_FRONT},
+    },
+    {
+        {1, FAMILIARISATION, "fam_xyy_5", SND_DIRECTION_RIGHT},
+    },
+    {
+        {1, FAMILIARISATION, "fam_xyy_6", SND_DIRECTION_LEFT},
+    },
+    {
+        {1, FAMILIARISATION, "fam_xyy_7", SND_DIRECTION_FRONT},
+    },
 };
 
 /****** items for the test items ******/
@@ -70,26 +103,12 @@ TestItem[..] test_items = {
 void prepare_test_items(int ppid)
 {
     // Append the items to the test items.
-    if (selected_group == FAM_XYX_A || selected_group == FAM_XYY_A) {
-        test_items_a.shuffle(0, -1);
-        append_test_items(test_items, test_items_a);
-        test_items_b.shuffle(0, -1);
-        append_test_items(test_items, test_items_b);
-        test_items_a.shuffle(0, -1);
-        append_test_items(test_items, test_items_a);
-    }
-    else if(selected_group == FAM_XYX_B || selected_group == FAM_XYY_B) {
-        test_items_b.shuffle(0, -1);
-        append_test_items(test_items, test_items_b);
-        test_items_a.shuffle(0, -1);
-        append_test_items(test_items, test_items_a);
-        test_items_b.shuffle(0, -1);
-        append_test_items(test_items, test_items_b);
-    }
-    else {
-        print_error("Oops invalid group chosen or programming error.");
-        // force zep to quit straight away.
-        int quit = 1/0;
-    }
+
+    test_items_a.shuffle(0, -1);
+    append_test_items(test_items, test_items_a);
+    test_items_b.shuffle(0, -1);
+    append_test_items(test_items, test_items_b);
+    test_items_a.shuffle(0, -1);
+    append_test_items(test_items, test_items_a);
 }
 
