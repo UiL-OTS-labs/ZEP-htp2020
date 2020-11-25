@@ -2,14 +2,13 @@
 enum ItemType
 {
     FAMILIARISATION,    // Stimulus from fam phase
-    TESTA,
-    TESTB,
+    TEST,
 }
 
 record TestItem
 {
     int             id;         // The id of the trial.
-    ItemType        type;       // What type of stimulus is presented.
+    ItemType        type;       // The type of trial
     string          snd_fn;     // Which stimulus is presented.
     SoundDirection  dir;        // from which direction should the sound
                                 // be played.
@@ -83,18 +82,19 @@ TestItem[..][..] fam_items = {
 
 /****** items for the test items ******/
 
-TestItem[..] test_items_a = {
-    {1,  TESTA, "test_xyx_ba_po_ba_48000", SND_DIRECTION_LEFT},
-    {2,  TESTA, "test_xyx_ko_ga_ko_48000", SND_DIRECTION_RIGHT},
-    {3,  TESTA, "test_xyy_ba_po_po_48000", SND_DIRECTION_LEFT},
-    {4,  TESTA, "test_xyy_ko_ga_ga_48000", SND_DIRECTION_RIGHT},
+// The last column will be changed programmatically. 
+TestItem[..] test_items_base = {
+    {1, TEST, "test_stream_ba_po_ba_15", SND_DIRECTION_LEFT},
+    {2, TEST, "test_stream_ko_ga_ko_15", SND_DIRECTION_LEFT},
+    {3, TEST, "test_stream_ba_po_po_15", SND_DIRECTION_LEFT},
+    {4, TEST, "test_stream_ko_ga_ga_15", SND_DIRECTION_LEFT}
 };
 
-TestItem[..] test_items_b = {
-    {5,  TESTB, "test_xyx_ba_po_ba_48000", SND_DIRECTION_RIGHT},
-    {6,  TESTB, "test_xyx_ko_ga_ko_48000", SND_DIRECTION_LEFT},
-    {7,  TESTB, "test_xyy_ba_po_po_48000", SND_DIRECTION_RIGHT},
-    {8,  TESTB, "test_xyy_ko_ga_ga_48000", SND_DIRECTION_LEFT},
+SoundDirection[..] sound_dirs = {
+    SND_DIRECTION_LEFT,
+    SND_DIRECTION_LEFT,
+    SND_DIRECTION_RIGHT,
+    SND_DIRECTION_RIGHT
 };
 
 TestItem[..] test_items = {
@@ -103,12 +103,19 @@ TestItem[..] test_items = {
 void prepare_test_items(int ppid)
 {
     // Append the items to the test items.
+    int i = 0;
+    int reps = 3;
 
-    test_items_a.shuffle(0, -1);
-    append_test_items(test_items, test_items_a);
-    test_items_b.shuffle(0, -1);
-    append_test_items(test_items, test_items_b);
-    test_items_a.shuffle(0, -1);
-    append_test_items(test_items, test_items_a);
+    while (i < reps) {
+        test_items_base.shuffle(0, -1);
+        sound_dirs.shuffle(0, -1);
+        int j = 0;
+        while (j < test_items_base.size) {
+            test_items_base[j].dir = sound_dirs[j];
+            append_test_item(test_items, test_items_base[j]);
+            j++;
+        }
+        i++;
+    }
 }
 
