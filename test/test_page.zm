@@ -312,6 +312,9 @@ Page test_page
             playback.device = sound_output_device;
             clip.file = stimuli_dir() + "sounds/" +fn + ".wav";
 
+            // Make the stimulus precisely TEST_STIM_DURATION long.
+            clip.content_duration = TEST_STIM_DURATION;
+
             start(t);
             return expected_start_time;
         }
