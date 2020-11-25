@@ -18,7 +18,9 @@ const real HABITUATION_CRITERION        = 65.0;
 const dur  MAX_LOOK_AWAY_DURATION       = 2000ms;
 const dur  CLOCK_UPDATE_PERIOD          = 20ms;
 
-const int NUM_REPETITIONS = 6;
+const int NUM_REPETITIONS 		= 1;
+
+const dur TEST_STIM_DURATION		= 15s;
 
 const color FRONT_COLOR                 = rgbi:0/255/0;
 const color SIDE_COLOR                  = rgbi:255/0/0;
