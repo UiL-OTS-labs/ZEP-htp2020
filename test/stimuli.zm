@@ -82,7 +82,8 @@ TestItem[..][..] fam_items = {
 
 /****** items for the test items ******/
 
-// The last column will be changed programmatically. 
+// The last column will be changed programmatically.
+// The id will also be added dynamically.
 TestItem[..] test_items_base = {
     {1, TEST, "test_stream_ba_po_ba_15", SND_DIRECTION_LEFT},
     {2, TEST, "test_stream_ko_ga_ko_15", SND_DIRECTION_LEFT},

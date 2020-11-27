@@ -9,6 +9,17 @@ Page test_page
     int         nth_trial;      // the number of the current trial.
 
     //Object      caller;
+    void log_event(time event_time, HvfEvent event)
+    {
+        EventOutput output;
+
+        output.phase = PHASE_TEST;
+        output.trial = nth_trial;
+        output.event = event;
+        output.event_time = int(event_time - zero_time());
+
+        event_output_append(output);
+    }
 
     // This timer is started at the beginning of a trial if it is fired
     // the trial ends because of maximum trial duration is called.
@@ -64,6 +75,7 @@ Page test_page
                 if (event == EVENT_START_LOOKING) {
                     ignore_remaining_hits();
                     action_side(event_time);
+                    log_event(t, EVENT_START_LOOKING);
                 }
             }
         }
@@ -79,6 +91,7 @@ Page test_page
                 if (event == EVENT_START_LOOKING) {
                     ignore_remaining_hits();
                     action_trial(t);
+                    log_event(t, EVENT_START_LOOKING);
                 }
             }
         }
@@ -136,6 +149,7 @@ Page test_page
                     abort_trial_timer.start(t + MAX_LOOK_AWAY_DURATION);
                     control.stop_clock(t);
                     nlookaways++;
+                    log_event(t, EVENT_STOP_LOOKING);
                 }
                 else if (event == EVENT_START_LOOKING) {
                     if(is_looking)
@@ -147,6 +161,7 @@ Page test_page
                     control.start_clock(t);
                     abort_trial_timer.abort();
                     nlooks++;
+                    log_event(t, EVENT_START_LOOKING);
                 }
                 else if (event == EVENT_STOP_TIMER) {
                     if (is_looking)
@@ -155,6 +170,7 @@ Page test_page
                         cumnlt+= (t - nolookstart);
 
                     // abort trial
+                    log_event(t, EVENT_STOP_TIMER);
                     done(CONTINUE);
                 }
             }
@@ -193,13 +209,13 @@ Page test_page
             {
                 //println("Releasing clock.");
                 control.release_clock(event_time);
-		control.start_light(FRONT_SIDE);
+                control.start_light(FRONT_SIDE);
             }
 
             on_event:finish()
             {
                 this.start(event_time + LIGHT_ISI, LIGHT_DURATION);
-		control.stop_light(FRONT_SIDE);
+                control.stop_light(FRONT_SIDE);
             }
 
             CircleShape c0
@@ -251,6 +267,7 @@ Page test_page
             control.show_speaker_icon(lights);
 
             //perhaps save audio start even to detailed log.
+            log_event(event_time, EVENT_AUDIO_START);
         }
 
         on_event:finish()
@@ -266,6 +283,7 @@ Page test_page
             output.stimulus = clip.file;
 
             stimulus_output_append(output);
+            log_event(event_time, EVENT_AUDIO_FINISH);
 
             if (nth_rep < NUM_REPETITIONS){
                 this.play(

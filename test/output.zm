@@ -16,8 +16,7 @@ enum exp_phase {
 record TestOutput
 {
     exp_phase phase;    // the phase of the experiment
-    int     trialnum;   // 
-//    int     id;         // id's change stimulus after stimulus.
+    int     trialnum;   // the nth trial
     int     lt;         // looking time(ms)
     int     nlt;        // time spend not looking.
     int     looks;      // number of time a child looks to the stimulus.
@@ -33,11 +32,20 @@ record StimOutput
     string  stimulus;   // the name of the stimulus
 }
 
+record EventOutput {
+    exp_phase   phase;      // The current phase
+    int         trial;      // the trial number
+    HvfEvent    event;      // The hvf event, see test/hvf_event.zm for meaning
+    int         event_time; // The number of ms since the start of the experiment
+};
+
 TestOutput[..] fam_output;
 StimOutput[..] fam_stim_output;
 
 TestOutput[..] test_output;
 StimOutput[..] test_stim_output;
+
+EventOutput[..] event_output;
 
 void fam_stim_output_append(StimOutput output)
 {
@@ -63,6 +71,12 @@ void stimulus_output_append(StimOutput output)
     test_stim_output[test_stim_output.size-1] = output;
 }
 
+void event_output_append(EventOutput output)
+{
+   event_output.size = event_output.size + 1;
+   event_output[event_output.size-1] = output;
+}
+
 void save_fam_output()
 {
     string fn = expdb.experiment.session.create_table("fam_output", 1);
@@ -83,6 +97,10 @@ void save_output()
     fn = expdb.experiment.session.create_table("test_stim", 4);
     test_stim_output.append(fn, ": stimulus table");
     test_stim_output.size = 0;
+
+    fn = expdb.experiment.session.create_table("event_output", 5);
+    event_output.append(fn, ": event table");
+    event_output.size = 0;
 }
 
 // is called from task.zm to check whether the infant has habituated.
