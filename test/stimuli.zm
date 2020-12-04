@@ -31,52 +31,52 @@ void append_test_items(TestItem[] items1, TestItem[] items2)
 
 TestItem[..][..] fam_items = {
     {
-        {1, FAMILIARISATION, "fam_xyx_0", SND_DIRECTION_RIGHT | SND_DIRECTION_LEFT},
+        {1, FAMILIARISATION, "fam_xyx_0", SND_DIRECTION_RIGHT_LEFT},
     },
     {
-        {1, FAMILIARISATION, "fam_xyx_1", SND_DIRECTION_RIGHT | SND_DIRECTION_LEFT},
+        {1, FAMILIARISATION, "fam_xyx_1", SND_DIRECTION_RIGHT_LEFT},
     },
     {
-        {1, FAMILIARISATION, "fam_xyx_2", SND_DIRECTION_RIGHT | SND_DIRECTION_LEFT},
+        {1, FAMILIARISATION, "fam_xyx_2", SND_DIRECTION_RIGHT_LEFT},
     },
     {
-        {1, FAMILIARISATION, "fam_xyx_3", SND_DIRECTION_RIGHT | SND_DIRECTION_LEFT},
+        {1, FAMILIARISATION, "fam_xyx_3", SND_DIRECTION_RIGHT_LEFT},
     },
     {
-        {1, FAMILIARISATION, "fam_xyx_4", SND_DIRECTION_RIGHT | SND_DIRECTION_LEFT},
+        {1, FAMILIARISATION, "fam_xyx_4", SND_DIRECTION_RIGHT_LEFT},
     },
     {
-        {1, FAMILIARISATION, "fam_xyx_5", SND_DIRECTION_RIGHT | SND_DIRECTION_LEFT},
+        {1, FAMILIARISATION, "fam_xyx_5", SND_DIRECTION_RIGHT_LEFT},
     },
     {
-        {1, FAMILIARISATION, "fam_xyx_6", SND_DIRECTION_RIGHT | SND_DIRECTION_LEFT},
+        {1, FAMILIARISATION, "fam_xyx_6", SND_DIRECTION_RIGHT_LEFT},
     },
     {
-        {1, FAMILIARISATION, "fam_xyx_7", SND_DIRECTION_RIGHT | SND_DIRECTION_LEFT},
+        {1, FAMILIARISATION, "fam_xyx_7", SND_DIRECTION_RIGHT_LEFT},
     },
     {
-        {1, FAMILIARISATION, "fam_xyy_0", SND_DIRECTION_RIGHT | SND_DIRECTION_LEFT},
+        {1, FAMILIARISATION, "fam_xyy_0", SND_DIRECTION_RIGHT_LEFT},
     },
     {
-        {1, FAMILIARISATION, "fam_xyy_1", SND_DIRECTION_RIGHT | SND_DIRECTION_LEFT},
+        {1, FAMILIARISATION, "fam_xyy_1", SND_DIRECTION_RIGHT_LEFT},
     },
     {
-        {1, FAMILIARISATION, "fam_xyy_2", SND_DIRECTION_RIGHT | SND_DIRECTION_LEFT},
+        {1, FAMILIARISATION, "fam_xyy_2", SND_DIRECTION_RIGHT_LEFT},
     },
     {
-        {1, FAMILIARISATION, "fam_xyy_3", SND_DIRECTION_RIGHT | SND_DIRECTION_LEFT},
+        {1, FAMILIARISATION, "fam_xyy_3", SND_DIRECTION_RIGHT_LEFT},
     },
     {
-        {1, FAMILIARISATION, "fam_xyy_4", SND_DIRECTION_RIGHT | SND_DIRECTION_LEFT},
+        {1, FAMILIARISATION, "fam_xyy_4", SND_DIRECTION_RIGHT_LEFT},
     },
     {
-        {1, FAMILIARISATION, "fam_xyy_5", SND_DIRECTION_RIGHT | SND_DIRECTION_LEFT},
+        {1, FAMILIARISATION, "fam_xyy_5", SND_DIRECTION_RIGHT_LEFT},
     },
     {
-        {1, FAMILIARISATION, "fam_xyy_6", SND_DIRECTION_RIGHT | SND_DIRECTION_LEFT},
+        {1, FAMILIARISATION, "fam_xyy_6", SND_DIRECTION_RIGHT_LEFT},
     },
     {
-        {1, FAMILIARISATION, "fam_xyy_7", SND_DIRECTION_RIGHT | SND_DIRECTION_LEFT},
+        {1, FAMILIARISATION, "fam_xyy_7", SND_DIRECTION_RIGHT_LEFT},
     },
 };
 

@@ -28,7 +28,9 @@ const color SIDE_COLOR                  = rgbi:255/0/0;
 enum SoundDirection {
     SND_DIRECTION_LEFT  = 1 << 0,
     SND_DIRECTION_RIGHT = 1 << 1,
-    SND_DIRECTION_FRONT = 1 << 2
+    SND_DIRECTION_FRONT = 1 << 2,
+    SND_DIRECTION_RIGHT_LEFT = SND_DIRECTION_LEFT | SND_DIRECTION_RIGHT
+
 };
 
 enum SoundChannel {
