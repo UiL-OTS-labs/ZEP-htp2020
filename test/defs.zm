@@ -22,6 +22,9 @@ const int NUM_REPETITIONS 	            = 1;
 
 const dur TEST_STIM_DURATION            = 15s;
 
+
+const real CIRCLE_RADIUS                = 100;
+
 const color FRONT_COLOR                 = rgbi:0/255/0;
 const color SIDE_COLOR                  = rgbi:255/0/0;
 

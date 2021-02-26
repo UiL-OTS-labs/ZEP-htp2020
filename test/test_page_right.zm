@@ -26,7 +26,7 @@ Page test_page_right
                 offset_x = width/2;
                 offset_y = height/2;
 
-                cir_radius   = 50;
+                cir_radius   = CIRCLE_RADIUS;
                 outer_radius = 200;
                 //Hide the canvas frame
                 fill_pattern_color = color:black;
