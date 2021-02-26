@@ -72,7 +72,7 @@ Page test_page
             HitType validity = hit(t);
             
             if (validity == HIT_VALID) {
-                if (event == EVENT_START_LOOKING) {
+                if (event == EVENT_START_ATTENTION) {
                     ignore_remaining_hits();
                     action_side(event_time);
                     log_event(t, EVENT_START_LOOKING);
