@@ -3,8 +3,8 @@
 // definitions in the experiment these are constant values used throughout
 // the experiment.
 
-const dur  LIGHT_ISI                    = 250ms;
-const dur  LIGHT_DURATION               = 250ms;
+const dur  LIGHT_ISI                    = 600ms;
+const dur  LIGHT_DURATION               = 800ms;
 
 // test/habituation phase.
 
@@ -23,10 +23,10 @@ const int NUM_REPETITIONS 	            = 1;
 const dur TEST_STIM_DURATION            = 15s;
 
 
-const real CIRCLE_RADIUS                = 100;
+const real CIRCLE_RADIUS                = 200;
 
-const color FRONT_COLOR                 = rgbi:0/255/0;
-const color SIDE_COLOR                  = rgbi:255/0/0;
+const color FRONT_COLOR                 = rgbi:75/213/43;
+const color SIDE_COLOR                  = rgbi:247/33/33;
 
 enum SoundDirection {
     SND_DIRECTION_LEFT  = 1 << 0,
